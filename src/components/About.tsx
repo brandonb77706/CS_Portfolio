@@ -1,4 +1,5 @@
 import { Code, Zap, Users, Target } from 'lucide-react';
+import headshotImage from '@/assets/headshot.jpg';
 
 const About = () => {
   const highlights = [
@@ -38,8 +39,34 @@ const About = () => {
           </p>
         </div>
 
-        <div className="grid lg:grid-cols-2 gap-12 items-center">
-          <div className="space-y-6">
+        <div className="grid lg:grid-cols-3 gap-12 items-start">
+          {/* Profile Photo Section */}
+          <div className="lg:col-span-1 flex justify-center">
+            <div className="glass-card p-8 hover-lift text-center">
+              <div className="relative mb-6">
+                <div className="w-64 h-64 mx-auto rounded-2xl overflow-hidden glow-primary">
+                  <img
+                    src={headshotImage}
+                    alt="Alex Developer - Computer Science Student"
+                    className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
+                  />
+                </div>
+                <div className="absolute -inset-1 bg-gradient-primary rounded-2xl opacity-20 blur-lg"></div>
+              </div>
+              
+              <h3 className="text-2xl font-semibold mb-2 gradient-text">Alex Developer</h3>
+              <p className="text-muted-foreground mb-4 font-mono">CS Student & Aspiring Developer</p>
+              
+              <div className="space-y-2 text-sm text-muted-foreground">
+                <p>📍 San Francisco, CA</p>
+                <p>🎓 Computer Science Major</p>
+                <p>💻 Full-Stack Enthusiast</p>
+              </div>
+            </div>
+          </div>
+
+          {/* Content Section */}
+          <div className="lg:col-span-2 space-y-6">
             <div className="glass-card p-8 hover-lift">
               <h3 className="text-2xl font-semibold mb-4 text-primary">My Journey</h3>
               <p className="text-muted-foreground leading-relaxed mb-4">
@@ -65,24 +92,25 @@ const About = () => {
                 that bridge the gap between technology and human needs.
               </p>
             </div>
-          </div>
 
-          <div className="grid sm:grid-cols-2 gap-6">
-            {highlights.map(({ icon: Icon, title, description }, index) => (
-              <div
-                key={title}
-                className="glass-card p-6 hover-lift text-center"
-                style={{ animationDelay: `${index * 0.1}s` }}
-              >
-                <div className="mb-4 flex justify-center">
-                  <div className="p-3 rounded-full bg-primary/10 glow-primary">
-                    <Icon className="w-8 h-8 text-primary" />
+            {/* Highlights Grid */}
+            <div className="grid sm:grid-cols-2 gap-6">
+              {highlights.map(({ icon: Icon, title, description }, index) => (
+                <div
+                  key={title}
+                  className="glass-card p-6 hover-lift text-center"
+                  style={{ animationDelay: `${index * 0.1}s` }}
+                >
+                  <div className="mb-4 flex justify-center">
+                    <div className="p-3 rounded-full bg-primary/10 glow-primary">
+                      <Icon className="w-8 h-8 text-primary" />
+                    </div>
                   </div>
+                  <h4 className="text-lg font-semibold mb-2 text-foreground">{title}</h4>
+                  <p className="text-sm text-muted-foreground leading-relaxed">{description}</p>
                 </div>
-                <h4 className="text-lg font-semibold mb-2 text-foreground">{title}</h4>
-                <p className="text-sm text-muted-foreground leading-relaxed">{description}</p>
-              </div>
-            ))}
+              ))}
+            </div>
           </div>
         </div>
       </div>
