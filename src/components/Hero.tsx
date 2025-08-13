@@ -5,21 +5,41 @@ import heroImage from '@/assets/hero-bg.jpg';
 
 const Hero = () => {
   const [displayText, setDisplayText] = useState('');
-  const fullText = 'Computer Science Student';
+  const [currentIndex, setCurrentIndex] = useState(0);
+  const [isDeleting, setIsDeleting] = useState(false);
+  
+  const sentences = [
+    'Computer Science Student',
+    'Passionate Learner',
+    'Future Full-Stack Developer',
+    'Future Mobile-App Developer'
+  ];
   
   useEffect(() => {
-    let index = 0;
-    const timer = setInterval(() => {
-      if (index < fullText.length) {
-        setDisplayText(fullText.slice(0, index + 1));
-        index++;
-      } else {
-        clearInterval(timer);
-      }
-    }, 100);
+    const currentSentence = sentences[currentIndex];
     
-    return () => clearInterval(timer);
-  }, []);
+    const timer = setTimeout(() => {
+      if (!isDeleting) {
+        // Typing
+        if (displayText.length < currentSentence.length) {
+          setDisplayText(currentSentence.slice(0, displayText.length + 1));
+        } else {
+          // Pause before deleting
+          setTimeout(() => setIsDeleting(true), 2000);
+        }
+      } else {
+        // Deleting
+        if (displayText.length > 0) {
+          setDisplayText(currentSentence.slice(0, displayText.length - 1));
+        } else {
+          setIsDeleting(false);
+          setCurrentIndex((prevIndex) => (prevIndex + 1) % sentences.length);
+        }
+      }
+    }, isDeleting ? 50 : 100);
+    
+    return () => clearTimeout(timer);
+  }, [displayText, currentIndex, isDeleting, sentences]);
 
   const scrollToAbout = () => {
     const aboutSection = document.getElementById('about');
