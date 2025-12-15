@@ -1,72 +1,93 @@
-import { useState } from 'react';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
-import { Textarea } from '@/components/ui/textarea';
-import { Mail, Phone, MapPin, Send, Github, Linkedin, Twitter } from 'lucide-react';
-import { toast } from 'sonner';
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Input } from "@/components/ui/input";
+import { Textarea } from "@/components/ui/textarea";
+import {
+  Mail,
+  Phone,
+  MapPin,
+  Send,
+  Github,
+  Linkedin,
+  Twitter,
+} from "lucide-react";
+import emailjs from "@emailjs/browser";
+import { toast } from "sonner";
 
 const Contact = () => {
   const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    subject: '',
-    message: ''
+    name: "",
+    email: "",
+    subject: "",
+    message: "",
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    // Handle form submission here
-    toast.success('Message sent successfully! I\'ll get back to you soon.');
-    setFormData({ name: '', email: '', subject: '', message: '' });
+
+    try {
+      await emailjs.send(
+        import.meta.env.VITE_EMAILJS_SERVICE_ID,
+        import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
+        {
+          from_name: formData.name,
+          from_email: formData.email,
+          subject: formData.subject,
+          message: formData.message,
+        },
+        import.meta.env.VITE_EMAILJS_PUBLIC_KEY
+      );
+
+      toast.success("Message sent successfully! I'll get back to you soon.");
+      setFormData({ name: "", email: "", subject: "", message: "" });
+    } catch (error) {
+      toast.error("Failed to send message. Please try again.");
+    }
   };
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+  const handleChange = (
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
     setFormData({
       ...formData,
-      [e.target.name]: e.target.value
+      [e.target.name]: e.target.value,
     });
   };
 
   const contactInfo = [
     {
       icon: Mail,
-      label: 'Email',
-      value: 'alex.developer@email.com',
-      href: 'mailto:alex.developer@email.com'
+      label: "Email",
+      value: "bbrow113@emich.edu",
+      href: "mailto:bbrow113@emich.edu",
     },
     {
       icon: Phone,
-      label: 'Phone',
-      value: '+1 (555) 123-4567',
-      href: 'tel:+15551234567'
+      label: "Phone",
+      value: "+1 (248) 979-3285",
+      href: "tel:+12489793285",
     },
     {
       icon: MapPin,
-      label: 'Location',
-      value: 'San Francisco, CA',
-      href: '#'
-    }
+      label: "Location",
+      value: "Southfield, Michigan",
+      href: "#",
+    },
   ];
 
   const socialLinks = [
     {
       icon: Github,
-      label: 'GitHub',
-      href: 'https://github.com',
-      color: 'hover:text-gray-400'
+      label: "GitHub",
+      href: "https://github.com/brandonb77706",
+      color: "hover:text-gray-400",
     },
     {
       icon: Linkedin,
-      label: 'LinkedIn',
-      href: 'https://linkedin.com',
-      color: 'hover:text-blue-400'
+      label: "LinkedIn",
+      href: "https://www.linkedin.com/in/brandon-brown-m/",
+      color: "hover:text-blue-400",
     },
-    {
-      icon: Twitter,
-      label: 'Twitter',
-      href: 'https://twitter.com',
-      color: 'hover:text-sky-400'
-    }
   ];
 
   return (
@@ -77,8 +98,8 @@ const Contact = () => {
             Get In <span className="gradient-text">Touch</span>
           </h2>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-            I'm always excited to discuss new opportunities, interesting projects, or just chat about technology.
-            Feel free to reach out!
+            I'm always excited to discuss new opportunities, interesting
+            projects, or just chat about technology. Feel free to reach out!
           </p>
         </div>
 
@@ -90,11 +111,11 @@ const Contact = () => {
                 Let's Connect
               </h3>
               <p className="text-muted-foreground mb-8 leading-relaxed">
-                Whether you have a project in mind, want to collaborate, or just want to say hello,
-                I'd love to hear from you. I'm currently open to internship opportunities and
-                freelance projects.
+                Whether you have a project in mind, want to collaborate, or just
+                want to say hello, I'd love to hear from you. I'm currently open
+                to internship opportunities and freelance projects.
               </p>
-              
+
               <div className="space-y-4">
                 {contactInfo.map(({ icon: Icon, label, value, href }) => (
                   <a
@@ -134,7 +155,8 @@ const Contact = () => {
                 ))}
               </div>
               <p className="text-sm text-muted-foreground mt-4">
-                Check out my latest projects and connect with me on social media.
+                Check out my latest projects and connect with me on social
+                media.
               </p>
             </div>
           </div>
@@ -144,11 +166,14 @@ const Contact = () => {
             <h3 className="text-2xl font-semibold mb-6 text-primary">
               Send Message
             </h3>
-            
+
             <form onSubmit={handleSubmit} className="space-y-6">
               <div className="grid sm:grid-cols-2 gap-4">
                 <div>
-                  <label htmlFor="name" className="block text-sm font-medium text-foreground mb-2">
+                  <label
+                    htmlFor="name"
+                    className="block text-sm font-medium text-foreground mb-2"
+                  >
                     Name
                   </label>
                   <Input
@@ -163,7 +188,10 @@ const Contact = () => {
                   />
                 </div>
                 <div>
-                  <label htmlFor="email" className="block text-sm font-medium text-foreground mb-2">
+                  <label
+                    htmlFor="email"
+                    className="block text-sm font-medium text-foreground mb-2"
+                  >
                     Email
                   </label>
                   <Input
@@ -178,9 +206,12 @@ const Contact = () => {
                   />
                 </div>
               </div>
-              
+
               <div>
-                <label htmlFor="subject" className="block text-sm font-medium text-foreground mb-2">
+                <label
+                  htmlFor="subject"
+                  className="block text-sm font-medium text-foreground mb-2"
+                >
                   Subject
                 </label>
                 <Input
@@ -194,9 +225,12 @@ const Contact = () => {
                   placeholder="What's this about?"
                 />
               </div>
-              
+
               <div>
-                <label htmlFor="message" className="block text-sm font-medium text-foreground mb-2">
+                <label
+                  htmlFor="message"
+                  className="block text-sm font-medium text-foreground mb-2"
+                >
                   Message
                 </label>
                 <Textarea
@@ -210,7 +244,7 @@ const Contact = () => {
                   placeholder="Tell me about your project or just say hello..."
                 />
               </div>
-              
+
               <Button
                 type="submit"
                 size="lg"

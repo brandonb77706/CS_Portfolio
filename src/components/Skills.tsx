@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef, useState } from "react";
 
 const Skills = () => {
   const [isVisible, setIsVisible] = useState(false);
@@ -6,38 +6,61 @@ const Skills = () => {
 
   const skillCategories = [
     {
-      title: 'Frontend',
+      title: "Frontend",
       skills: [
-        { name: 'React', level: 90, color: 'from-blue-500 to-cyan-500' },
-        { name: 'TypeScript', level: 85, color: 'from-blue-600 to-blue-400' },
-        { name: 'Tailwind CSS', level: 88, color: 'from-cyan-500 to-teal-500' },
-        { name: 'Next.js', level: 75, color: 'from-gray-700 to-gray-500' }
-      ]
+        { name: "React", level: 90, color: "from-blue-500 to-cyan-500" },
+        { name: "NextJS", level: 90, color: "from-gray-700 to-gray-500" },
+        { name: "TypeScript", level: 85, color: "from-blue-600 to-blue-400" },
+        { name: "react Native", level: 70, color: "from-cyan-500 to-teal-500" },
+        { name: "JavaScript", level: 65, color: "from-gray-700 to-gray-500" },
+      ],
     },
     {
-      title: 'Backend',
+      title: "Backend",
       skills: [
-        { name: 'Node.js', level: 80, color: 'from-green-600 to-green-400' },
-        { name: 'Python', level: 85, color: 'from-yellow-500 to-yellow-300' },
-        { name: 'PostgreSQL', level: 75, color: 'from-blue-700 to-blue-500' },
-        { name: 'MongoDB', level: 70, color: 'from-green-700 to-green-500' }
-      ]
+        { name: "Node.js", level: 90, color: "from-green-600 to-green-400" },
+        { name: "Python", level: 80, color: "from-yellow-500 to-yellow-300" },
+        { name: "Express.js", level: 85, color: "from-blue-700 to-blue-500" },
+        { name: "MongoDB", level: 80, color: "from-green-700 to-green-500" },
+        { name: "Postgresql", level: 65, color: "from-gray-700 to-gray-500" },
+      ],
     },
     {
-      title: 'Tools & Others',
+      title: "Tools & Others",
       skills: [
-        { name: 'Git', level: 90, color: 'from-orange-600 to-orange-400' },
-        { name: 'Docker', level: 65, color: 'from-blue-600 to-blue-400' },
-        { name: 'AWS', level: 60, color: 'from-orange-500 to-yellow-500' },
-        { name: 'Linux', level: 75, color: 'from-gray-600 to-gray-400' }
-      ]
-    }
+        { name: "Git", level: 90, color: "from-orange-600 to-orange-400" },
+        { name: "GutHub", level: 90, color: "from-yellow-500 to-yellow-300" },
+
+        { name: "Jira", level: 80, color: "from-blue-600 to-blue-400" },
+        {
+          name: "MongoDB Compass",
+          level: 70,
+          color: "from-gray-600 to-gray-400",
+        },
+      ],
+    },
   ];
 
   const technologies = [
-    'JavaScript', 'Python', 'React', 'Node.js', 'TypeScript', 'PostgreSQL',
-    'MongoDB', 'Docker', 'AWS', 'Git', 'Linux', 'Next.js', 'Tailwind',
-    'Express', 'REST APIs', 'GraphQL', 'Redis', 'Jest', 'Webpack', 'Vite'
+    "TypeScript",
+    "Python",
+    "React",
+    "Next.js",
+    "React Native",
+    "Expo",
+    "JavaScript",
+    "Node.js",
+    "Firebase",
+    "HTML/CSS",
+    "Postgresql",
+    "java",
+    "Git/Github",
+
+    "Tailwind",
+    "Express",
+    "REST APIs",
+    "MongoDB",
+    "Jira",
   ];
 
   useEffect(() => {
@@ -65,8 +88,8 @@ const Skills = () => {
             Technical <span className="gradient-text">Skills</span>
           </h2>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-            A comprehensive toolkit of programming languages, frameworks, and technologies
-            I use to bring ideas to life.
+            A comprehensive toolkit of programming languages, frameworks, and
+            technologies I use to bring ideas to life.
           </p>
         </div>
 
@@ -96,8 +119,10 @@ const Skills = () => {
                       <div
                         className={`h-2 rounded-full bg-gradient-to-r ${skill.color} transition-all duration-1000 ease-out`}
                         style={{
-                          width: isVisible ? `${skill.level}%` : '0%',
-                          transitionDelay: `${(categoryIndex * 0.2) + (skillIndex * 0.1)}s`
+                          width: isVisible ? `${skill.level}%` : "0%",
+                          transitionDelay: `${
+                            categoryIndex * 0.2 + skillIndex * 0.1
+                          }s`,
                         }}
                       />
                     </div>
@@ -120,9 +145,11 @@ const Skills = () => {
                 className="px-4 py-2 bg-muted/50 border border-border rounded-full text-sm font-medium text-foreground hover:bg-primary/10 hover:border-primary/50 hover:text-primary transition-all duration-300 cursor-default"
                 style={{
                   animationDelay: `${index * 0.05}s`,
-                  animation: isVisible ? 'fadeInUp 0.5s ease-out forwards' : 'none',
+                  animation: isVisible
+                    ? "fadeInUp 0.5s ease-out forwards"
+                    : "none",
                   opacity: isVisible ? 1 : 0,
-                  transform: isVisible ? 'translateY(0)' : 'translateY(20px)'
+                  transform: isVisible ? "translateY(0)" : "translateY(20px)",
                 }}
               >
                 {tech}

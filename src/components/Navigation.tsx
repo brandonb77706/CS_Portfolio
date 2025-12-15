@@ -1,5 +1,5 @@
-import { useState, useEffect } from 'react';
-import { Button } from '@/components/ui/button';
+import { useState, useEffect } from "react";
+import { Button } from "@/components/ui/button";
 
 const Navigation = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -9,29 +9,31 @@ const Navigation = () => {
       setIsScrolled(window.scrollY > 50);
     };
 
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
   }, []);
 
   const scrollToSection = (sectionId: string) => {
     const element = document.getElementById(sectionId);
     if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
+      element.scrollIntoView({ behavior: "smooth" });
     }
   };
 
   return (
-    <nav className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-      isScrolled ? 'glass-card py-4' : 'py-6'
-    }`}>
+    <nav
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
+        isScrolled ? "glass-card py-4" : "py-6"
+      }`}
+    >
       <div className="container mx-auto px-6">
         <div className="flex justify-between items-center">
           <div className="text-xl font-bold gradient-text font-mono">
-            &lt;/dev&gt;
+            Brandon Brown
           </div>
-          
+
           <div className="hidden md:flex space-x-8">
-            {['About', 'Skills', 'Projects', 'Contact'].map((item) => (
+            {["About", "Skills", "Projects", "Contact"].map((item) => (
               <button
                 key={item}
                 onClick={() => scrollToSection(item.toLowerCase())}
@@ -42,13 +44,13 @@ const Navigation = () => {
               </button>
             ))}
           </div>
-          
+
           <Button
-            onClick={() => scrollToSection('contact')}
+            onClick={() => window.open("/Brandon_Brown_Resume.pdf", "_blank")}
             variant="outline"
             className="hidden md:block border-primary text-primary hover:bg-primary hover:text-primary-foreground glow-primary"
           >
-            Get In Touch
+            View Resume
           </Button>
         </div>
       </div>
