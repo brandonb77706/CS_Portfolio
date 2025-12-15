@@ -72,7 +72,7 @@ const Projects = () => {
       image: "/api/placeholder/600/400",
       tags: ["React", "TypeScript", "Tailwind", "Vite"],
       liveUrl: "#",
-      githubUrl: "#",
+      githubUrl: "https://github.com/brandonb77706/CS_Portfolio",
       icon: Code,
       featured: false,
     },
