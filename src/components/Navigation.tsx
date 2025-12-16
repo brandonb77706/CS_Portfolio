@@ -46,11 +46,16 @@ const Navigation = () => {
           </div>
 
           <Button
-            onClick={() => window.open("/Brandon_Brown_Resume.pdf", "_blank")}
+            onClick={() => {
+              const link = document.createElement("a");
+              link.href = "/Brandon_Brown_Resume.pdf";
+              link.download = "Brandon_Brown_Resume.pdf";
+              link.click();
+            }}
             variant="outline"
             className="hidden md:block border-primary text-primary hover:bg-primary hover:text-primary-foreground glow-primary"
           >
-            View Resume
+            Download Resume
           </Button>
         </div>
       </div>
