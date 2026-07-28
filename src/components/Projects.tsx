@@ -40,6 +40,7 @@ const projects: Project[] = [
     ],
     tags: ["Next.js", "FastAPI", "MongoDB", "TypeScript", "AI"],
     icon: TrendingUp,
+    githubUrl: "https://github.com/brandonb77706/hackathon",
   },
   {
     id: 2,
@@ -52,6 +53,7 @@ const projects: Project[] = [
     ],
     tags: ["Python", "AWS", "Terraform", "Lambda", "Serverless"],
     icon: Cloud,
+    githubUrl: "https://github.com/brandonb77706/aws-document-processor",
   },
   {
     id: 3,
@@ -65,6 +67,7 @@ const projects: Project[] = [
     ],
     tags: ["React", "TypeScript", "FastAPI", "PostgreSQL", "OpenAI"],
     icon: Sparkles,
+    githubUrl: "https://github.com/brandonb77706/code_challenge_generator",
   },
   {
     id: 4,
