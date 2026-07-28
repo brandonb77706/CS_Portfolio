@@ -3,47 +3,48 @@ import { Button } from "@/components/ui/button";
 import { Github, Linkedin, Mail, ArrowDown } from "lucide-react";
 import heroImage from "@/assets/hero-bg.jpg";
 
+// Defined outside the component so it keeps a stable identity across renders —
+// as a local it was a new array each render, re-firing the effect below.
+const sentences = [
+  "Computer Science Student",
+  "Passionate Learner",
+  "Future Full-Stack Developer",
+  "Future Mobile-App Developer",
+  "Problem-solver",
+];
+
 const Hero = () => {
   const [displayText, setDisplayText] = useState("");
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isDeleting, setIsDeleting] = useState(false);
 
-  const sentences = [
-    "Computer Science Student",
-    "Passionate Learner",
-    "Future Full-Stack Developer",
-    "Future Mobile-App Developer",
-    "Problem-solver",
-  ];
-
   useEffect(() => {
     const currentSentence = sentences[currentIndex];
+    let timer: ReturnType<typeof setTimeout>;
 
-    const timer = setTimeout(
-      () => {
-        if (!isDeleting) {
-          // Typing
-          if (displayText.length < currentSentence.length) {
-            setDisplayText(currentSentence.slice(0, displayText.length + 1));
-          } else {
-            // Pause before deleting
-            setTimeout(() => setIsDeleting(true), 2000);
-          }
-        } else {
-          // Deleting
-          if (displayText.length > 0) {
-            setDisplayText(currentSentence.slice(0, displayText.length - 1));
-          } else {
-            setIsDeleting(false);
-            setCurrentIndex((prevIndex) => (prevIndex + 1) % sentences.length);
-          }
-        }
-      },
-      isDeleting ? 50 : 100
-    );
+    if (!isDeleting && displayText === currentSentence) {
+      // Fully typed — hold, then start deleting.
+      timer = setTimeout(() => setIsDeleting(true), 2000);
+    } else if (isDeleting && displayText === "") {
+      // Fully deleted — advance to the next sentence.
+      setIsDeleting(false);
+      setCurrentIndex((prevIndex) => (prevIndex + 1) % sentences.length);
+      return;
+    } else {
+      timer = setTimeout(
+        () => {
+          setDisplayText(
+            isDeleting
+              ? currentSentence.slice(0, displayText.length - 1)
+              : currentSentence.slice(0, displayText.length + 1)
+          );
+        },
+        isDeleting ? 50 : 100
+      );
+    }
 
     return () => clearTimeout(timer);
-  }, [displayText, currentIndex, isDeleting, sentences]);
+  }, [displayText, currentIndex, isDeleting]);
 
   const scrollToAbout = () => {
     const aboutSection = document.getElementById("about");

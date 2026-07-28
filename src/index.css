@@ -1,4 +1,5 @@
-@import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@300;400;500;600&display=swap");
+/* Fonts are loaded via <link> in index.html so they can start downloading
+   immediately instead of waiting for this stylesheet to parse. */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -155,20 +156,36 @@
 }
 
 @layer components {
-  /* Glass Card Component */
+  /* Glass Card Component
+     Blur is the most expensive effect on the page and this class is used ~19x,
+     so keep the radius small and opt out entirely on touch/low-power devices. */
   .glass-card {
-    @apply bg-glass-card/70 backdrop-blur-xl border border-glass-border/50;
+    @apply bg-glass-card/70 backdrop-blur-md border border-glass-border/50;
     box-shadow: var(--shadow-glass);
   }
 
-  /* Gradient Text */
+  @media (hover: none), (prefers-reduced-motion: reduce) {
+    .glass-card {
+      @apply backdrop-blur-none bg-glass-card/90;
+    }
+  }
+
+  /* Gradient Text
+     The shimmer re-rasterizes the text every frame and this class is used on 7
+     headings, so it only runs where motion is welcome. Remove the media query
+     wrapper to bring the shimmer back everywhere. */
   .gradient-text {
     background: var(--gradient-primary);
     background-clip: text;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
     background-size: 200% 200%;
-    animation: gradient-shift 3s ease infinite;
+  }
+
+  @media (prefers-reduced-motion: no-preference) and (min-width: 768px) {
+    .gradient-text {
+      animation: gradient-shift 6s ease-in-out infinite;
+    }
   }
 
   /* Glow Effects */
@@ -182,9 +199,11 @@
       0 0 40px hsl(var(--secondary) / 0.1);
   }
 
-  /* Hover Animations */
+  /* Hover Animations
+     Only transform/shadow change on hover, so avoid transitioning `all`. */
   .hover-lift {
-    transition: var(--transition-smooth);
+    transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1),
+      box-shadow 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   }
 
   .hover-lift:hover {

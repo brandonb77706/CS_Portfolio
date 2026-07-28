@@ -1,92 +1,161 @@
-import { ExternalLink, Github, Code, Database, Smartphone } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
+import {
+  Cloud,
+  Code,
+  ExternalLink,
+  Film,
+  Github,
+  ListChecks,
+  Music,
+  Sparkles,
+  Trophy,
+  TrendingUp,
+  Wallet,
+} from "lucide-react";
 import { Button } from "@/components/ui/button";
-import guruLogo from "@/assets/guru.png";
-import guruIDE from "@/assets/guru-ide.png";
-import sonzaify from "@/assets/sonzaify.png";
-const Projects = () => {
-  const projects = [
-    {
-      id: 1,
-      title: "AI Learning platform",
-      description:
-        "Led the frontend development team for a real-time voice AI coding tutor built with React. Designed and implemented a custom Monaco Editor–based terminal interface, a responsive landing page, and key UI/UX features to deliver an engaging, adaptive learning experience.",
-      image: guruIDE,
-      githubUrl: "#",
-      tags: ["Next.js", "TypeScript", "React", "Tailwind", "Python"],
-      liveUrl: "https://frontend-gurueds-projects.vercel.app/",
-      icon: Database,
-      featured: true,
-    },
-    {
-      id: 2,
-      title: "Budgeting Mobile App",
-      description:
-        "A cross-platform budgeting app built with React Native, Express.js, and Firebase. Features include secure financial account linking via Plaid API and real-time expense tracking across categories.",
-      image: "sonzaify",
-      tags: ["React Native", "TypeScript", "Express.js", "Firebase", "Plaid"],
-      githubUrl: "https://github.com/brandonb77706/budgetly",
-      icon: Smartphone,
-      featured: false,
-    },
-    {
-      id: 3,
-      title: "Spotify Playlist importer",
-      description:
-        "Developed a web application that enables users to generate and save custom Spotify playlists, reducing playlist creation time by 30%. Integrated OAuth 2.0 and the Spotify Web API for secure authentication and dynamic playlist management, and implemented a responsive React-based interface with robust asynchronous logic and error handling to ensure a smooth user experience.",
-      image: sonzaify,
-      tags: ["React", "Node.js", "Spotify API", "OAuth"],
-      liveUrl: "#",
-      githubUrl: "https://github.com/brandonb77706/sonzaify",
-      icon: Database,
-      featured: true,
-    },
-    {
-      id: 4,
-      title: "Movie Finder Mobile App",
-      description:
-        "Developed a cross-platform movie discovery mobile application that enables users to search for films, view detailed movie information, and explore a curated list of trending recommendations. Built with React Native for a seamless iOS and Android experience, and powered by an Appwrite backend to manage user data and implement a popularity-based algorithm for surfacing trending movies.",
-      image: "",
-      tags: ["React Native", "Appwrite", "TypeScript", "TailwindCSS"],
-      liveUrl: "#",
-      githubUrl: "https://github.com/brandonb77706/movie_app/",
-      icon: Smartphone,
-      featured: false,
-    },
-    {
-      id: 5,
-      title: "Full-Stack Task Manager",
-      description:
-        "Developed a full-stack task management web application designed to help users efficiently organize their work through prioritized tasks and deadline tracking. The application features a modern React frontend and a Node.js backend, with MongoDB used to securely persist user accounts and task data, enabling scalable, reliable, and user-centric task management.",
-      image: "/api/placeholder/600/400",
-      tags: ["React", "Node.js", "MondgoDB", "Express"],
-      liveUrl: "#",
-      githubUrl: "https://github.com/brandonb77706/web-task-manager",
-      icon: Code,
-      featured: false,
-    },
-    {
-      id: 6,
-      title: "Portfolio Website",
-      description:
-        "A responsive portfolio website showcasing my projects and skills. Built with modern web technologies and optimized for performance and SEO.",
-      image: "/api/placeholder/600/400",
-      tags: ["React", "TypeScript", "Tailwind", "Vite"],
-      liveUrl: "#",
-      githubUrl: "https://github.com/brandonb77706/CS_Portfolio",
-      icon: Code,
-      featured: false,
-    },
-  ];
 
-  const featuredProjects = projects.filter((project) => project.featured);
-  const otherProjects = projects.filter((project) => !project.featured);
+type Project = {
+  id: number;
+  title: string;
+  stack: string;
+  highlights: string[];
+  tags: string[];
+  icon: typeof Code;
+  badge?: string;
+  liveUrl?: string;
+  githubUrl?: string;
+};
+
+const projects: Project[] = [
+  {
+    id: 1,
+    title: "Gig Driver Peak Time Optimizer",
+    stack: "Next.js · FastAPI · MongoDB · Base44 AI",
+    badge: "Hackathon Winner",
+    highlights: [
+      "Engineered a FastAPI analytics service using pre-aggregation to serve real-time insights in under 200ms.",
+      "Built a full-stack system processing multi-dimensional earnings data to identify peak revenue windows and generate scheduling recommendations.",
+      "Built a real-time analytics dashboard in Next.js + TypeScript to surface earnings trends and AI-driven recommendations.",
+      "Designed data pipelines and prompts for an AI recommendation engine, converting raw earnings data into actionable guidance.",
+    ],
+    tags: ["Next.js", "FastAPI", "MongoDB", "TypeScript", "AI"],
+    icon: TrendingUp,
+  },
+  {
+    id: 2,
+    title: "AWS Document Processing Pipeline",
+    stack: "Python · AWS (S3, Lambda, Textract, SQS) · Terraform",
+    highlights: [
+      "Designed and built a serverless document processing pipeline in Python that ingests files through S3, triggers Lambda functions, and extracts text with Textract.",
+      "Decoupled processing stages with SQS queues to isolate failures and enable automatic retries.",
+      "Provisioned infrastructure as code with Terraform, configuring VPC networking and least-privilege IAM policies.",
+    ],
+    tags: ["Python", "AWS", "Terraform", "Lambda", "Serverless"],
+    icon: Cloud,
+  },
+  {
+    id: 3,
+    title: "AI-Generated Coding Quiz Platform",
+    stack: "React · TypeScript · FastAPI · PostgreSQL · OpenAI",
+    highlights: [
+      "Built a full-stack web application that generates AI-powered coding challenges using OpenAI APIs.",
+      "Built a type-safe React + TypeScript frontend and a high-performance FastAPI backend with REST APIs.",
+      "Achieved sub-millisecond endpoint latency and ~5ms database query time through optimized SQL queries and indexing.",
+      "Separated AI inference from application logic, isolating the ~97% of latency attributable to model inference (~2.05s total).",
+    ],
+    tags: ["React", "TypeScript", "FastAPI", "PostgreSQL", "OpenAI"],
+    icon: Sparkles,
+  },
+  {
+    id: 4,
+    title: "Spotify Playlist Generator",
+    stack: "React · Node.js · JavaScript",
+    highlights: [
+      "Implemented production-grade logging and performance monitoring, achieving 0–2ms server-side latency on cached routes.",
+      "Integrated OAuth 2.0 and the Spotify Web API to authenticate users and dynamically manage playlists.",
+      "Reduced playlist creation time by 20% with a React frontend supporting real-time interactions.",
+    ],
+    tags: ["React", "Node.js", "Spotify API", "OAuth"],
+    icon: Music,
+    githubUrl: "https://github.com/brandonb77706/sonzaify",
+  },
+  {
+    id: 5,
+    title: "Budgeting Mobile App",
+    stack: "React Native · Express.js · Firebase",
+    highlights: [
+      "Built a cross-platform budgeting app with secure financial account linking via the Plaid API.",
+      "Implemented real-time expense tracking across spending categories.",
+    ],
+    tags: ["React Native", "TypeScript", "Express.js", "Firebase", "Plaid"],
+    icon: Wallet,
+    githubUrl: "https://github.com/brandonb77706/budgetly",
+  },
+  {
+    id: 6,
+    title: "Movie Finder Mobile App",
+    stack: "React Native · Appwrite · TypeScript",
+    highlights: [
+      "Built a cross-platform movie discovery app for searching films and viewing detailed information.",
+      "Backed by Appwrite to manage user data and power a popularity-based algorithm for surfacing trending movies.",
+    ],
+    tags: ["React Native", "Appwrite", "TypeScript", "TailwindCSS"],
+    icon: Film,
+    githubUrl: "https://github.com/brandonb77706/movie_app/",
+  },
+  {
+    id: 7,
+    title: "Full-Stack Task Manager",
+    stack: "React · Node.js · MongoDB · Express",
+    highlights: [
+      "Built a task management app for organizing work through prioritized tasks and deadline tracking.",
+      "Persisted user accounts and task data in MongoDB behind a Node.js backend.",
+    ],
+    tags: ["React", "Node.js", "MongoDB", "Express"],
+    icon: ListChecks,
+    githubUrl: "https://github.com/brandonb77706/web-task-manager",
+  },
+  {
+    id: 8,
+    title: "Portfolio Website",
+    stack: "React · TypeScript · Tailwind · Vite",
+    highlights: [
+      "A responsive portfolio site showcasing my projects and skills.",
+      "Built with modern tooling and optimized for performance and SEO.",
+    ],
+    tags: ["React", "TypeScript", "Tailwind", "Vite"],
+    icon: Code,
+    githubUrl: "https://github.com/brandonb77706/CS_Portfolio",
+  },
+];
+
+const Projects = () => {
+  const [isVisible, setIsVisible] = useState(false);
+  const sectionRef = useRef<HTMLElement>(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+        }
+      },
+      { threshold: 0.1 }
+    );
+
+    if (sectionRef.current) {
+      observer.observe(sectionRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, []);
 
   return (
-    <section id="projects" className="py-20 px-6">
+    <section id="projects" ref={sectionRef} className="py-20 px-6">
       <div className="container mx-auto max-w-6xl">
         <div className="text-center mb-16">
           <h2 className="text-4xl md:text-5xl font-bold mb-6">
-            Featured <span className="gradient-text">Projects</span>
+            Recent <span className="gradient-text">Projects</span>
           </h2>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
             A showcase of my recent work, demonstrating various technologies and
@@ -95,138 +164,112 @@ const Projects = () => {
           </p>
         </div>
 
-        {/* Featured Projects */}
-        <div className="grid lg:grid-cols-2 gap-8 mb-16">
-          {featuredProjects.map((project, index) => (
-            <div
-              key={project.id}
-              className="glass-card p-0 overflow-hidden hover-lift group"
-              style={{ animationDelay: `${index * 0.2}s` }}
-            >
-              <div className="aspect-video bg-muted/30 relative overflow-hidden">
-                <div className="absolute inset-0 bg-gradient-to-br from-primary/20 to-secondary/20 flex items-center justify-center">
-                  {project.image! ? (
-                    // If it's a string URL
-                    <img
-                      src={project.image}
-                      alt={project.title}
-                      className="w-full h-full object-cover"
-                    />
-                  ) : (
-                    // If it's an imported image
-                    <project.icon className="w-16 h-16 text-primary/60" />
-                  )}
-                </div>
-                <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center space-x-4">
-                  {project.liveUrl && project.liveUrl !== "#" && (
-                    <Button
-                      size="sm"
-                      className="bg-primary hover:bg-primary/90"
-                      asChild
-                    >
-                      <a
-                        href={project.liveUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        <ExternalLink className="w-4 h-4 mr-2" />
-                        Live Demo
-                      </a>
-                    </Button>
-                  )}
-                  {project.githubUrl && project.githubUrl !== "#" && (
-                    <Button
-                      size="sm"
-                      variant="outline"
-                      className="border-secondary text-secondary hover:bg-secondary"
-                      asChild
-                    >
-                      <a
-                        href={project.githubUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                      >
-                        <Github className="w-4 h-4 mr-2" />
-                        Code
-                      </a>
-                    </Button>
-                  )}
-                </div>
-              </div>
+        <div className="grid md:grid-cols-2 gap-6">
+          {projects.map((project, index) => {
+            const Icon = project.icon;
+            const hasLinks =
+              (project.githubUrl && project.githubUrl !== "#") ||
+              (project.liveUrl && project.liveUrl !== "#");
 
-              <div className="p-6">
-                <h3 className="text-xl font-semibold mb-3 text-foreground">
-                  {project.title}
-                </h3>
-                <p className="text-muted-foreground mb-4 leading-relaxed">
-                  {project.description}
-                </p>
-                <div className="flex flex-wrap gap-2">
-                  {project.tags.map((tag) => (
-                    <span
-                      key={tag}
-                      className="px-3 py-1 bg-primary/10 text-primary text-xs rounded-full border border-primary/20"
-                    >
-                      {tag}
-                    </span>
-                  ))}
-                </div>
-              </div>
-            </div>
-          ))}
-        </div>
-
-        {/* Other Projects Grid */}
-        <div>
-          <h3 className="text-2xl font-semibold mb-8 text-center text-secondary">
-            Other Projects
-          </h3>
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {otherProjects.map((project, index) => (
-              <div
+            return (
+              <article
                 key={project.id}
-                className="glass-card p-6 hover-lift group"
-                style={{ animationDelay: `${index * 0.1}s` }}
+                className="glass-card p-6 md:p-7 hover-lift group flex flex-col transition-all duration-700"
+                style={{
+                  opacity: isVisible ? 1 : 0,
+                  transform: isVisible ? "translateY(0)" : "translateY(24px)",
+                  transitionDelay: `${Math.min(index, 5) * 0.08}s`,
+                }}
               >
-                <div className="flex items-center justify-between mb-4">
-                  <project.icon className="w-8 h-8 text-primary" />
-                  <div className="flex space-x-2">
-                    <a
-                      href={project.githubUrl}
-                      className="p-2 rounded-full hover:bg-primary/10 transition-colors"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      <Github className="w-4 h-4 text-muted-foreground hover:text-primary" />
-                    </a>
+                {/* Header */}
+                <div className="flex items-start gap-4 mb-4">
+                  <div className="flex items-center justify-center w-11 h-11 rounded-lg bg-primary/10 border border-primary/30 text-primary shrink-0 transition-colors duration-300 group-hover:bg-primary/20">
+                    <Icon className="w-5 h-5" />
+                  </div>
+                  <div className="min-w-0 flex-1">
+                    <div className="flex flex-wrap items-center gap-x-3 gap-y-1.5">
+                      <h3 className="text-lg font-semibold text-foreground">
+                        {project.title}
+                      </h3>
+                      {project.badge && (
+                        <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-warning/10 border border-warning/40 text-warning font-mono text-[0.65rem] uppercase tracking-wider whitespace-nowrap">
+                          <Trophy className="w-3 h-3" />
+                          {project.badge}
+                        </span>
+                      )}
+                    </div>
+                    <p className="font-mono text-xs text-muted-foreground mt-1.5">
+                      {project.stack}
+                    </p>
                   </div>
                 </div>
 
-                <h4 className="text-lg font-semibold mb-2 text-foreground">
-                  {project.title}
-                </h4>
-                <p className="text-sm text-muted-foreground mb-4 leading-relaxed">
-                  {project.description}
-                </p>
-
-                <div className="flex flex-wrap gap-1">
-                  {project.tags.slice(0, 3).map((tag) => (
-                    <span
-                      key={tag}
-                      className="px-2 py-1 bg-muted/50 text-muted-foreground text-xs rounded"
-                    >
-                      {tag}
-                    </span>
+                {/* Highlights */}
+                <ul className="space-y-2.5 mb-5">
+                  {project.highlights.map((highlight) => (
+                    <li key={highlight} className="flex gap-3">
+                      <span className="mt-2 w-1.5 h-1.5 rounded-full bg-secondary shrink-0" />
+                      <span className="text-sm text-muted-foreground leading-relaxed">
+                        {highlight}
+                      </span>
+                    </li>
                   ))}
-                  {project.tags.length > 3 && (
-                    <span className="px-2 py-1 bg-muted/50 text-muted-foreground text-xs rounded">
-                      +{project.tags.length - 3}
-                    </span>
+                </ul>
+
+                {/* Tags pinned to the bottom so cards line up in the grid */}
+                <div className="mt-auto pt-4 border-t border-glass-border/40">
+                  <div className="flex flex-wrap gap-2">
+                    {project.tags.map((tag) => (
+                      <span
+                        key={tag}
+                        className="px-2.5 py-1 bg-primary/10 text-primary text-xs rounded-full border border-primary/20"
+                      >
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
+
+                  {hasLinks && (
+                    <div className="flex gap-3 mt-4">
+                      {project.liveUrl && project.liveUrl !== "#" && (
+                        <Button
+                          size="sm"
+                          className="bg-primary hover:bg-primary/90"
+                          asChild
+                        >
+                          <a
+                            href={project.liveUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                          >
+                            <ExternalLink className="w-4 h-4 mr-2" />
+                            Live Demo
+                          </a>
+                        </Button>
+                      )}
+                      {project.githubUrl && project.githubUrl !== "#" && (
+                        <Button
+                          size="sm"
+                          variant="outline"
+                          className="border-secondary text-secondary hover:bg-secondary hover:text-secondary-foreground"
+                          asChild
+                        >
+                          <a
+                            href={project.githubUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                          >
+                            <Github className="w-4 h-4 mr-2" />
+                            Code
+                          </a>
+                        </Button>
+                      )}
+                    </div>
                   )}
                 </div>
-              </div>
-            ))}
-          </div>
+              </article>
+            );
+          })}
         </div>
 
         <div className="text-center mt-12">

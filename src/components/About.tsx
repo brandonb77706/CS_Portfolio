@@ -36,13 +36,18 @@ const About = () => {
             About <span className="gradient-text">Me</span>
           </h2>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto leading-relaxed">
-            I’m an ambitious Computer Science student at Eastern Michigan
-            University, studying on a full-ride Presidential Scholarship. I
-            specialize in full-stack and mobile app development, driven by a
-            love for creating engaging, user-friendly digital experiences. With
-            hands-on experience building interactive applications using modern
-            technologies, I’m dedicated to transforming creative ideas into
-            impactful, high-quality solutions.
+            I'm a Computer Science student at Eastern Michigan University on a
+            full-ride Presidential Scholarship, currently interning at Rocket
+            where I build authentication features for their internal platform. I
+            work across the full stack, using TypeScript, React, Next.js, and
+            Angular on the frontend and Python, FastAPI, and Node.js on the
+            backend. I like building things where the results are measurable. My
+            recent projects include a hackathon award-winning analytics platform
+            that serves insights in under 200ms and a serverless document
+            pipeline on AWS. Outside of code, I serve as Vice President of NSBE
+            at EMU and I'm a Career Prep Fellow with Management Leadership for
+            Tomorrow. I'm currently seeking Summer 2027 software engineering
+            internships.
           </p>
         </div>
 
@@ -111,8 +116,9 @@ const About = () => {
                 <br />
                 Expected Graduation: 2028
                 <br />
-                GPA: 3.97/4.0
+                GPA: 3.98/4.0
               </p>
+
               <p className="text-muted-foreground leading-relaxed mt-4">
                 My goal is to earn a software development internship and learn
                 with hands on experience to, grow into a full-stack or mobile

@@ -1,67 +1,83 @@
 import { useEffect, useRef, useState } from "react";
+import { Code2, Server, Database, GitBranch } from "lucide-react";
+
+const tiers = {
+  daily: {
+    label: "Daily Driver",
+    dot: "bg-primary",
+    text: "text-primary",
+    chip: "border-primary/40 bg-primary/10 text-primary hover:bg-primary/20 hover:border-primary hover:shadow-[0_0_16px_hsl(var(--primary)/0.35)]",
+  },
+  proficient: {
+    label: "Proficient",
+    dot: "bg-secondary",
+    text: "text-secondary",
+    chip: "border-secondary/40 bg-secondary/10 text-secondary hover:bg-secondary/20 hover:border-secondary hover:shadow-[0_0_16px_hsl(var(--secondary)/0.35)]",
+  },
+  familiar: {
+    label: "Familiar",
+    dot: "bg-muted-foreground",
+    text: "text-muted-foreground",
+    chip: "border-border bg-muted/50 text-muted-foreground hover:bg-muted hover:border-glass-border hover:text-foreground",
+  },
+} as const;
+
+type TierKey = keyof typeof tiers;
+
+const skillCategories: {
+  title: string;
+  icon: typeof Code2;
+  groups: { tier: TierKey; skills: string[] }[];
+}[] = [
+  {
+    title: "Frontend & Mobile",
+    icon: Code2,
+    groups: [
+      {
+        tier: "daily",
+        skills: [
+          "React",
+          "Next.js",
+          "TypeScript",
+          "JavaScript",
+          "Tailwind CSS",
+          "HTML/CSS",
+        ],
+      },
+      { tier: "proficient", skills: ["React Native", "Expo"] },
+    ],
+  },
+  {
+    title: "Backend & APIs",
+    icon: Server,
+    groups: [
+      { tier: "daily", skills: ["Node.js", "Express", "REST APIs"] },
+      { tier: "proficient", skills: ["Python"] },
+      { tier: "familiar", skills: ["Java"] },
+    ],
+  },
+  {
+    title: "Databases",
+    icon: Database,
+    groups: [
+      { tier: "proficient", skills: ["MongoDB", "Firebase"] },
+      { tier: "familiar", skills: ["PostgreSQL"] },
+    ],
+  },
+  {
+    title: "Tools & Workflow",
+    icon: GitBranch,
+    groups: [
+      { tier: "daily", skills: ["Git", "GitHub"] },
+      { tier: "proficient", skills: ["Jira"] },
+      { tier: "familiar", skills: ["MongoDB Compass"] },
+    ],
+  },
+];
 
 const Skills = () => {
   const [isVisible, setIsVisible] = useState(false);
   const sectionRef = useRef<HTMLElement>(null);
-
-  const skillCategories = [
-    {
-      title: "Frontend",
-      skills: [
-        { name: "React", level: 90, color: "from-blue-500 to-cyan-500" },
-        { name: "NextJS", level: 90, color: "from-gray-700 to-gray-500" },
-        { name: "TypeScript", level: 85, color: "from-blue-600 to-blue-400" },
-        { name: "react Native", level: 70, color: "from-cyan-500 to-teal-500" },
-        { name: "JavaScript", level: 65, color: "from-gray-700 to-gray-500" },
-      ],
-    },
-    {
-      title: "Backend",
-      skills: [
-        { name: "Node.js", level: 90, color: "from-green-600 to-green-400" },
-        { name: "Python", level: 80, color: "from-yellow-500 to-yellow-300" },
-        { name: "Express.js", level: 85, color: "from-blue-700 to-blue-500" },
-        { name: "MongoDB", level: 80, color: "from-green-700 to-green-500" },
-        { name: "Postgresql", level: 65, color: "from-gray-700 to-gray-500" },
-      ],
-    },
-    {
-      title: "Tools & Others",
-      skills: [
-        { name: "Git", level: 90, color: "from-orange-600 to-orange-400" },
-        { name: "GutHub", level: 90, color: "from-yellow-500 to-yellow-300" },
-
-        { name: "Jira", level: 80, color: "from-blue-600 to-blue-400" },
-        {
-          name: "MongoDB Compass",
-          level: 70,
-          color: "from-gray-600 to-gray-400",
-        },
-      ],
-    },
-  ];
-
-  const technologies = [
-    "TypeScript",
-    "Python",
-    "React",
-    "Next.js",
-    "React Native",
-    "Expo",
-    "JavaScript",
-    "Node.js",
-    "Firebase",
-    "HTML/CSS",
-    "Postgresql",
-    "java",
-    "Git/Github",
-
-    "Tailwind",
-    "Express",
-    "REST APIs",
-    "MongoDB",
-    "Jira",
-  ];
 
   useEffect(() => {
     const observer = new IntersectionObserver(
@@ -70,7 +86,7 @@ const Skills = () => {
           setIsVisible(true);
         }
       },
-      { threshold: 0.3 }
+      { threshold: 0.2 }
     );
 
     if (sectionRef.current) {
@@ -83,79 +99,100 @@ const Skills = () => {
   return (
     <section id="skills" ref={sectionRef} className="py-20 px-6 bg-muted/20">
       <div className="container mx-auto max-w-6xl">
-        <div className="text-center mb-16">
+        <div className="text-center mb-12">
           <h2 className="text-4xl md:text-5xl font-bold mb-6">
             Technical <span className="gradient-text">Skills</span>
           </h2>
           <p className="text-xl text-muted-foreground max-w-3xl mx-auto">
-            A comprehensive toolkit of programming languages, frameworks, and
-            technologies I use to bring ideas to life.
+            The languages, frameworks, and tools I build with — grouped by how
+            often I actually reach for them.
           </p>
         </div>
 
-        {/* Skill Categories with Progress Bars */}
-        <div className="grid md:grid-cols-3 gap-8 mb-16">
-          {skillCategories.map((category, categoryIndex) => (
-            <div
-              key={category.title}
-              className="glass-card p-6 hover-lift"
-              style={{ animationDelay: `${categoryIndex * 0.2}s` }}
-            >
-              <h3 className="text-xl font-semibold mb-6 text-center text-primary">
-                {category.title}
-              </h3>
-              <div className="space-y-4">
-                {category.skills.map((skill, skillIndex) => (
-                  <div key={skill.name}>
-                    <div className="flex justify-between mb-2">
-                      <span className="text-sm font-medium text-foreground">
-                        {skill.name}
-                      </span>
-                      <span className="text-sm text-muted-foreground">
-                        {skill.level}%
-                      </span>
-                    </div>
-                    <div className="w-full bg-muted rounded-full h-2">
-                      <div
-                        className={`h-2 rounded-full bg-gradient-to-r ${skill.color} transition-all duration-1000 ease-out`}
-                        style={{
-                          width: isVisible ? `${skill.level}%` : "0%",
-                          transitionDelay: `${
-                            categoryIndex * 0.2 + skillIndex * 0.1
-                          }s`,
-                        }}
-                      />
-                    </div>
-                  </div>
-                ))}
-              </div>
+        {/* Tier legend */}
+        <div className="flex flex-wrap justify-center gap-x-8 gap-y-3 mb-12">
+          {(Object.keys(tiers) as TierKey[]).map((key) => (
+            <div key={key} className="flex items-center gap-2">
+              <span className={`w-2 h-2 rounded-full ${tiers[key].dot}`} />
+              <span
+                className={`font-mono text-xs uppercase tracking-widest ${tiers[key].text}`}
+              >
+                {tiers[key].label}
+              </span>
             </div>
           ))}
         </div>
 
-        {/* Technology Cloud */}
-        <div className="glass-card p-8 hover-lift">
-          <h3 className="text-2xl font-semibold mb-6 text-center text-secondary">
-            Technology Stack
-          </h3>
-          <div className="flex flex-wrap justify-center gap-3">
-            {technologies.map((tech, index) => (
-              <span
-                key={tech}
-                className="px-4 py-2 bg-muted/50 border border-border rounded-full text-sm font-medium text-foreground hover:bg-primary/10 hover:border-primary/50 hover:text-primary transition-all duration-300 cursor-default"
+        {/* Skill Categories */}
+        <div className="grid md:grid-cols-2 gap-8">
+          {skillCategories.map((category, categoryIndex) => {
+            const Icon = category.icon;
+            const total = category.groups.reduce(
+              (sum, group) => sum + group.skills.length,
+              0
+            );
+
+            return (
+              <div
+                key={category.title}
+                className="glass-card p-6 md:p-8 hover-lift transition-all duration-700"
                 style={{
-                  animationDelay: `${index * 0.05}s`,
-                  animation: isVisible
-                    ? "fadeInUp 0.5s ease-out forwards"
-                    : "none",
                   opacity: isVisible ? 1 : 0,
-                  transform: isVisible ? "translateY(0)" : "translateY(20px)",
+                  transform: isVisible ? "translateY(0)" : "translateY(24px)",
+                  transitionDelay: `${categoryIndex * 0.12}s`,
                 }}
               >
-                {tech}
-              </span>
-            ))}
-          </div>
+                {/* Card header */}
+                <div className="flex items-center gap-4 mb-6 pb-5 border-b border-glass-border/40">
+                  <div className="flex items-center justify-center w-11 h-11 rounded-lg bg-primary/10 border border-primary/30 text-primary shrink-0">
+                    <Icon className="w-5 h-5" />
+                  </div>
+                  <div className="min-w-0">
+                    <h3 className="text-lg font-semibold text-foreground truncate">
+                      {category.title}
+                    </h3>
+                    <span className="font-mono text-xs text-muted-foreground">
+                      {total} technologies
+                    </span>
+                  </div>
+                </div>
+
+                {/* Tier groups */}
+                <div className="space-y-5">
+                  {category.groups.map((group) => (
+                    <div key={group.tier}>
+                      <div className="flex items-center gap-2 mb-3">
+                        <span
+                          className={`w-1 h-3.5 rounded-full ${
+                            tiers[group.tier].dot
+                          }`}
+                        />
+                        <span
+                          className={`font-mono text-[0.7rem] uppercase tracking-widest ${
+                            tiers[group.tier].text
+                          }`}
+                        >
+                          {tiers[group.tier].label}
+                        </span>
+                      </div>
+                      <div className="flex flex-wrap gap-2">
+                        {group.skills.map((skill) => (
+                          <span
+                            key={skill}
+                            className={`px-3 py-1.5 rounded-lg border text-sm font-medium cursor-default transition-all duration-300 ${
+                              tiers[group.tier].chip
+                            }`}
+                          >
+                            {skill}
+                          </span>
+                        ))}
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            );
+          })}
         </div>
       </div>
     </section>
