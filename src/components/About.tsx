@@ -41,13 +41,13 @@ const About = () => {
             where I build authentication features for their internal platform. I
             work across the full stack, using TypeScript, React, Next.js, and
             Angular on the frontend and Python, FastAPI, and Node.js on the
-            backend. I like building things where the results are measurable. My
-            recent projects include a hackathon award-winning analytics platform
-            that serves insights in under 200ms and a serverless document
-            pipeline on AWS. Outside of code, I serve as Vice President of NSBE
-            at EMU and I'm a Career Prep Fellow with Management Leadership for
-            Tomorrow. I'm currently seeking Summer 2027 software engineering
-            internships.
+            backend. <br /> <br />I like building things where the results are
+            measurable. My recent projects include a hackathon award-winning
+            analytics platform that serves insights in under 200ms and a
+            serverless document pipeline on AWS. Outside of code, I serve as
+            Vice President of NSBE at EMU and I'm a Career Prep Fellow with
+            Management Leadership for Tomorrow. I'm currently seeking Summer
+            2027 software engineering internships.
           </p>
         </div>
 
